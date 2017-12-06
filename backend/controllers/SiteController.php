@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User;
 
 /**
  * Site controller
@@ -70,6 +71,17 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        /*
+        $user = new User;
+        $user->username = 'admin';
+        $user->generateAuthKey();
+        $user->setPassword('123qwe');
+        $user->email = 'rodyka09@gmail.com';
+        $user->status = 10;
+        $user->created_at = time();
+        $user->updated_at = time();
+        if ($user->save()) die(var_dump($user)); else die(var_dump($user->errors));
+        */
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

@@ -2,6 +2,13 @@
 
 /* @var $this yii\web\View */
 
+/*
+$app = Yii::getAlias('@app');;
+$web = Yii::getAlias('@web');
+
+$lang = Yii::$app->language;
+die(var_dump($lang));
+*/
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
