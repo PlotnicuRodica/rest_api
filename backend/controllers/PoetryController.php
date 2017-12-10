@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\PoetryCategory;
-use common\models\PoetryCategorySearch;
+use common\models\Poetry;
+use common\models\PoetrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PoetryCategoryController implements the CRUD actions for PoetryCategory model.
+ * PoetryController implements the CRUD actions for Poetry model.
  */
-class PoetryCategoryController extends Controller
+class PoetryController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Lists all PoetryCategory models.
+     * Lists all Poetry models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PoetryCategorySearch();
+        $searchModel = new PoetrySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Displays a single PoetryCategory model.
+     * Displays a single Poetry model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Creates a new PoetryCategory model.
+     * Creates a new Poetry model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PoetryCategory();
+        $model = new Poetry();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -75,7 +75,7 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Updates an existing PoetryCategory model.
+     * Updates an existing Poetry model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing PoetryCategory model.
+     * Deletes an existing Poetry model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class PoetryCategoryController extends Controller
     }
 
     /**
-     * Finds the PoetryCategory model based on its primary key value.
+     * Finds the Poetry model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return PoetryCategory the loaded model
+     * @return Poetry the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PoetryCategory::findOne($id)) !== null) {
+        if (($model = Poetry::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
