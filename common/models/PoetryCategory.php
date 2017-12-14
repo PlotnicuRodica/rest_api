@@ -41,24 +41,4 @@ class PoetryCategory extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
-
-    public function read(){
-/*
-        // select all query
-        $query = "SELECT
-                p.id, p.name
-            FROM
-                poetry_category p              
-            ORDER BY
-                p.id DESC";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-
-        return $stmt;
-*/
-    }
 }

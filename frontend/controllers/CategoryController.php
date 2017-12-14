@@ -46,6 +46,16 @@ class CategoryController extends Controller
         else throw new HttpException(400);
     }
 
+    public function actionPagination($id)
+    {
+        if(Yii::$app->request->isGet){
+            $limit = 10;
+            $offset = ($id * 10)-10;
+            return PoetryCategory::find()->offset($offset)->limit($limit)->all();
+        }
+        else throw new HttpException(400);
+    }
+
     public function actionOne($id)
     {
         if(Yii::$app->request->isGet) {
@@ -99,7 +109,7 @@ class CategoryController extends Controller
                             }
                         }
                     }
-                    throw new HttpException(404, $errors_s);
+                    throw new HttpException(400, $errors_s);
                 }
                 throw new HttpException(404, 'There is no category with this ID');
             } catch (Exception $err) {
