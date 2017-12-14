@@ -73,8 +73,10 @@ class PoetryController extends Controller
     {
         if(Yii::$app->request->isGet) {
             $poetry = Poetry::findOne(['id' => $id]);
-            $poetry->category_id = PoetryCategory::findOne(['id' => $poetry->category_id]);
-            if ($poetry) return $poetry;
+            if ($poetry) {
+                $poetry->category_id = PoetryCategory::findOne(['id' => $poetry->category_id]);
+                return $poetry;
+            }
             throw new HttpException(404,'There is no poetry with this ID');
         } else throw new HttpException(400);
     }
