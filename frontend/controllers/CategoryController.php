@@ -2,17 +2,16 @@
 
 namespace frontend\controllers;
 
-use common\models\Poetry;
-use common\models\PoetryCategory;
 use yii\db\Exception;
 use yii\web\Controller;
 use Yii;
+use common\models\PoetryCategory;
 use yii\web\HttpException;
 
 /**
- * Poetry controller for Api
+ * PoetryCategory controller for Api
  */
-class PoetryController extends Controller
+class CategoryController extends Controller
 {
 
     /*
@@ -42,20 +41,17 @@ class PoetryController extends Controller
 
     public function actionList()
     {
-        if(Yii::$app->request->isGet) {
-            $models = Poetry::find()->all();
-            foreach ($models as $model) $model->category_id = PoetryCategory::findOne(['id' => $model->category_id]);
-            return $models;
-        } else throw new HttpException(400);
+        if(Yii::$app->request->isGet)
+            return PoetryCategory::find()->all();
+        else throw new HttpException(400);
     }
 
     public function actionOne($id)
     {
         if(Yii::$app->request->isGet) {
-            $poetry = Poetry::findOne(['id' => $id]);
-            $poetry->category_id = PoetryCategory::findOne(['id' => $poetry->category_id]);
-            if ($poetry) return $poetry;
-            throw new HttpException(404,'There is no poetry with this ID');
+            $category = PoetryCategory::findOne(['id' => $id]);
+            if ($category) return $category;
+            throw new HttpException(404,'There is no category with this ID');
         } else throw new HttpException(400);
     }
 
@@ -64,20 +60,20 @@ class PoetryController extends Controller
         if(Yii::$app->request->isPost) {
             try {
                 $data = json_decode(file_get_contents("php://input"), true);
-                $poetry = new Poetry();
-                $poetry->setAttributes($data);
-                if ($poetry->save()) {
-                    return $poetry->getAttribute('id');
+                $category = new PoetryCategory;
+                $category->setAttributes($data);
+                if ($category->save()) {
+                    return $category->getAttribute('id');
                 }
                 $errors_s = '';
-                foreach ($poetry->errors as $error) {
+                foreach ($category->errors as $error) {
                     if (is_array($error)) {
                         foreach ($error as $err) {
                             $errors_s .= $err.'; ';
                         }
                     }
                 }
-                throw new HttpException(404, $errors_s);
+                throw new HttpException(400, $errors_s);
             } catch (Exception $err) {
                 throw new HttpException(400);
             }
@@ -88,15 +84,15 @@ class PoetryController extends Controller
     {
         if(Yii::$app->request->isPut) {
             try {
-                $poetry = Poetry::findOne(['id' => $id]);
-                if ($poetry) {
+                $category = PoetryCategory::findOne(['id' => $id]);
+                if ($category) {
                     $data = json_decode(file_get_contents("php://input"), true);
-                    $poetry->setAttributes($data);
-                    if ($poetry->save()) {
-                        return $poetry;
+                    $category->setAttributes($data);
+                    if ($category->save()) {
+                        return $category;
                     }
                     $errors_s = '';
-                    foreach ($poetry->errors as $error) {
+                    foreach ($category->errors as $error) {
                         if (is_array($error)) {
                             foreach ($error as $err) {
                                 $errors_s .= $err.'; ';
@@ -105,7 +101,7 @@ class PoetryController extends Controller
                     }
                     throw new HttpException(404, $errors_s);
                 }
-                throw new HttpException(404, 'There is no poetry with this ID');
+                throw new HttpException(404, 'There is no category with this ID');
             } catch (Exception $err) {
                 throw new HttpException(400);
             }
@@ -114,10 +110,10 @@ class PoetryController extends Controller
 
     public function actionDelete($id){
         if(Yii::$app->request->isDelete) {
-            $poetry = Poetry::findOne(['id' => $id]);
-            if ($poetry) {
-                return $poetry->delete();
-            } else throw new HttpException(404, 'There is no poetry with this ID');
+            $category = PoetryCategory::findOne(['id' => $id]);
+            if ($category) {
+                return $category->delete();
+            } else throw new HttpException(404, 'There is no category with this ID');
         } else throw new HttpException(400);
     }
 }

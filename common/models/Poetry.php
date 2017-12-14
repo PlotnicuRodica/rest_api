@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\PoetryCategory;
 
 /**
  * This is the model class for table "poetry".
@@ -33,6 +34,11 @@ class Poetry extends \yii\db\ActiveRecord
             [['category_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(PoetryCategory::className(), ['id' => 'category_id']);
     }
 
     /**
