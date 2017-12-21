@@ -40,6 +40,7 @@ class PoetryController extends Controller
         return parent::beforeAction($action);
     }
 
+    //all poetries
     public function actionList()
     {
         if(Yii::$app->request->isGet) {
@@ -49,6 +50,7 @@ class PoetryController extends Controller
         } else throw new HttpException(400);
     }
 
+    //all poetries by one cateogory
     public function actionFilter($id){
         if(Yii::$app->request->isGet) {
             $models = Poetry::find()->where(['category_id' => $id])->all();
@@ -57,6 +59,7 @@ class PoetryController extends Controller
         } else throw new HttpException(400);
     }
 
+    //all poetries on the id page
     public function actionPagination($id)
     {
         if(Yii::$app->request->isGet){
@@ -69,6 +72,7 @@ class PoetryController extends Controller
         else throw new HttpException(400);
     }
 
+    //one poetry by its id
     public function actionOne($id)
     {
         if(Yii::$app->request->isGet) {
@@ -81,6 +85,7 @@ class PoetryController extends Controller
         } else throw new HttpException(400);
     }
 
+    //create one poetry
     public function actionCreate()
     {
         if(Yii::$app->request->isPost) {
@@ -106,6 +111,7 @@ class PoetryController extends Controller
         } else throw new HttpException(400);
     }
 
+    //update one poetry by id
     public function actionUpdate($id)
     {
         if(Yii::$app->request->isPut) {
@@ -134,12 +140,22 @@ class PoetryController extends Controller
         } else throw new HttpException(400);
     }
 
+    //delete one poetry by id
     public function actionDelete($id){
         if(Yii::$app->request->isDelete) {
             $poetry = Poetry::findOne(['id' => $id]);
             if ($poetry) {
                 return $poetry->delete();
             } else throw new HttpException(404, 'There is no poetry with this ID');
+        } else throw new HttpException(400);
+    }
+
+    //get the first poetry from the category with the id
+    public function actionGetfromcategory($id){
+        if(Yii::$app->request->isGet) {
+            $model = Poetry::find()->where(['category_id' => $id])->one();
+            $model->category_id = PoetryCategory::findOne(['id' => $model->category_id]);
+            return $model;
         } else throw new HttpException(400);
     }
 }
